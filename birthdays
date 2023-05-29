@@ -1,0 +1,61 @@
+from datetime import datetime
+
+users = [
+    {'name':'Bill',
+     'birthday':datetime(year=2000, month=5, day=30)},
+    {'name':'Michael',
+     'birthday':datetime(year=2000, month=6, day=3)},
+    {'name':'Carl',
+     'birthday':datetime(year=2000, month=2, day=25)},
+    {'name':'Lucy',
+     'birthday':datetime(year=2000, month=6, day=4)},
+    {'name':'Jhon',
+     'birthday':datetime(year=2000, month=8, day=7)},
+    {'name':'James',
+     'birthday':datetime(year=2000, month=10, day=10)},
+    {'name': 'Ivan',
+     'birthday':datetime(year=2000, month=5, day=30)}
+    ]
+
+days_name = {
+    0: 'Monday',
+    1: 'Tuesday',
+    2: 'Wednesday',
+    3: 'Thursday',
+    4: 'Friday',
+    5: 'Saturday',
+    6: 'Sunday'
+}
+
+today = datetime.now()
+
+def get_birthdays_per_week(persons):
+    result = [{'Monday':[]},
+              {'Tuesday':[]},
+              {'Wednesday':[]},
+              {'Thursday':[]},
+              {'Friday':[]}]
+    for dict in persons:
+        birthday = dict['birthday'].replace(year=2023)
+        diff = birthday - today
+        if diff.days < 8 and diff.days >= 0:
+            day = birthday.weekday()
+            if day in {5, 6, 0}:
+                result[0]['Monday'].append(dict.get('name'))
+            elif day == 1:
+                result[1]['Tuesday'].append(dict.get('name'))
+            elif day == 2:
+                result[2]['Wednesday'].append(dict.get('name'))
+            elif day == 3:
+                result[3]['Thursday'].append(dict.get('name'))
+            elif day == 4:
+                result[4]['Friday'].append(dict.get('name'))
+
+    for i in result:
+        for k, v in i.items():
+            if len(v) > 0:
+                print(f'{k}: {", ".join(v)}')
+
+
+get_birthdays_per_week(users)
+
